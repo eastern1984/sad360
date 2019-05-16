@@ -7,9 +7,7 @@ import 'firebase/storage';
 import { GalleryImage} from '../models/galleryImage.model';
 import * as firebase from 'firebase';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ImageService {
   private uid: string;
 

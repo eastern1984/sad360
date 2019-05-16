@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '../material.module';
-import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   imports: [
@@ -19,6 +18,6 @@ import { UploadComponent } from './upload/upload.component';
     MaterialModule,
     FlexLayoutModule
   ],
-  declarations: [UploadComponent]
+  declarations: []
 })
 export class SharedModule {}

@@ -6,7 +6,6 @@ import { MatSnackBar } from '@angular/material';
 
 import { User } from './user.model';
 import { AuthData } from './auth-data.model';
-import { TrainingService } from '../training/training.service';
 import { UIService } from '../shared/ui.service';
 
 @Injectable()
@@ -17,7 +16,6 @@ export class AuthService {
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
-    private trainingService: TrainingService,
     private uiService: UIService
   ) {}
 
@@ -26,9 +24,8 @@ export class AuthService {
       if (user) {
         this.isAuthenticated = true;
         this.authChange.next(true);
-        this.router.navigate(['/training']);
+        this.router.navigate(['/gardens']);
       } else {
-        this.trainingService.cancelSubscriptions();
         this.authChange.next(false);
         this.router.navigate(['/login']);
         this.isAuthenticated = false;

@@ -8,7 +8,7 @@ import {GalleryImage} from '../models/galleryImage.model';
   templateUrl: './gardens.component.html',
   styleUrls: ['./gardens.component.css']
 })
-export class GardensComponent implements OnInit,OnChanges {
+export class GardensComponent implements OnInit, OnChanges {
 
   images: Observable<GalleryImage[]>;
 
