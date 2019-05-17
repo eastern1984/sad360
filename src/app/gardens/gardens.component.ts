@@ -15,10 +15,10 @@ export class GardensComponent implements OnInit, OnChanges {
   constructor(private imageService: ImageService) { }
 
   ngOnInit() {
-    this.images = this.imageService.getImages();
+    //this.images = this.imageService.getImages();
   }
 
   ngOnChanges() {
-      this.images = this.imageService.getImages();
+    //  this.images = this.imageService.getImages();
   }
 }

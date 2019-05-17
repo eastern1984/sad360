@@ -5,9 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AngularFireModule } from 'angularfire2';
-//import { AngularFireDatabaseModule} from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 //import { AngularFireAuthModule} from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFirestoreModule, AngularFirestore } from 'angularfire2/firestore';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -43,7 +43,7 @@ import {GardensComponent} from './gardens/gardens.component';
     AuthModule,
     AngularFirestoreModule
   ],
-  providers: [AuthService, UIService, ImageService, UploadService],
+  providers: [AuthService, UIService, ImageService, UploadService, AngularFireDatabase, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

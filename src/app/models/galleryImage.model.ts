@@ -1,4 +1,4 @@
-export interface GalleryImage {
+export class GalleryImage {
     $key?: string;
     name?: string;
     url?: string;
