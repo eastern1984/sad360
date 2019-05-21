@@ -16,7 +16,6 @@ export class UploadComponent {
   constructor(private uploadServise: UploadService) { }
 
   uploadFiles() {
-    var imageResizing = angular.module('imageResizingModule', []);
     console.log(111);
     const filesToUpload = this.files;
     const filesIdx = _.range(filesToUpload.length);
