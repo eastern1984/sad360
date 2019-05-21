@@ -16,11 +16,15 @@ export class UploadComponent {
   constructor(private uploadServise: UploadService) { }
 
   uploadFiles() {
+    var imageResizing = angular.module('imageResizingModule', []);
     console.log(111);
     const filesToUpload = this.files;
     const filesIdx = _.range(filesToUpload.length);
     _.each(filesIdx, (idx) => {
       this.upload = new Upload(filesToUpload[idx]);
+      console.log(4444);
+      console.log(this.upload);
+      console.log(3333);
       this.uploadServise.uploadFile(this.upload);
     });
   }
