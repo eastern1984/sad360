@@ -1,8 +1,10 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import {ImageService} from '../shared/image.service';
-import {Observable, Subscription} from '../../../node_modules/rxjs';
+import {Observable, Subscription, from} from '../../../node_modules/rxjs';
 import {GalleryImage} from '../models/galleryImage.model';
 import { AuthService } from '../auth/auth.service';
+import { CreateGardenComponent } from './create-garden.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-gardens',
@@ -17,7 +19,11 @@ export class GardensComponent implements OnInit, OnChanges {
   
  // images: Observable<GalleryImage[]>;
 
-  constructor(private imageService: ImageService, private authService: AuthService) { }
+  constructor(
+    private imageService: ImageService, 
+    private authService: AuthService,
+    private dialog: MatDialog
+    ) {}
 
   ngOnInit() {
     this.imagesSubscription = this.imageService.imageChanged.subscribe(
@@ -25,12 +31,35 @@ export class GardensComponent implements OnInit, OnChanges {
           this.images = images;
           console.log(images);
       });
-  this.imageService.getImages(this.authService.getEmail());
+  //this.imageService.getImages(this.authService.getEmail());
 
   //  this.images = this.imageService.getImages();
   }
 
   ngOnChanges() {
-      this.images = this.imageService.getImages();
+    //  this.images = this.imageService.getImages();
+  }
+
+  createGarden() {
+    const dialogRef = this.dialog.open(CreateGardenComponent, {
+      data: {
+        message: 'Message`123'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(333);
+      } else {
+        console.log(222);
+      }
+    });
+  }
+
+  imageSrc: string;
+
+  readURL(event: Event): void {
+    console.log(55555555555555);
+    console.log(event);
   }
 }

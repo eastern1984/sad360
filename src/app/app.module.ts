@@ -22,12 +22,14 @@ import {ImageService} from './shared/image.service';
 import {UploadService} from './shared/upload.service';
 import {UploadComponent} from './upload/upload.component';
 import {GardensComponent} from './gardens/gardens.component';
+import { CreateGardenComponent } from './gardens/create-garden.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     GardensComponent,
+    CreateGardenComponent,
     HeaderComponent,
     SidenavListComponent,
       UploadComponent
@@ -44,6 +46,7 @@ import {GardensComponent} from './gardens/gardens.component';
     AngularFireAuthModule
   ],
   providers: [AuthService, UIService, ImageService, UploadService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreateGardenComponent]
 })
 export class AppModule { }
