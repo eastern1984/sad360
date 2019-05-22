@@ -6,12 +6,14 @@ import { GalleryImage } from '../models/galleryImage.model';
 import { Upload } from '../models/upload.model';
 import * as firebase from 'firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { Subject } from 'rxjs';
 
 
 @Injectable()
 export class UploadService {
 
   private basePath = '/uploads';
+  downloadEnd = new Subject<boolean>();
   //private uploads: AngularFireList<GalleryImage[]>;
 
   constructor(/*private ngFire: AngularFireModule,*/ private db: AngularFirestore) { }
@@ -23,7 +25,7 @@ export class UploadService {
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) =>  {
         // upload in progress
-        upload.progress = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
+        upload.progress = parseInt(((uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100).toFixed(1));
       },
       (error) => {
         // upload failed
@@ -38,6 +40,7 @@ export class UploadService {
           console.log(111);
           console.log(downloadURL);
           this.saveFileData(upload);
+          this.downloadEnd.next(true);
         });
       }
     );

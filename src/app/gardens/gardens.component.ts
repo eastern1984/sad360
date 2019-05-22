@@ -43,7 +43,8 @@ export class GardensComponent implements OnInit, OnChanges {
   createGarden() {
     const dialogRef = this.dialog.open(CreateGardenComponent, {
       data: {
-        message: 'Message`123'
+        message: 'Message`123',
+        dialog: this.dialog
       }
     });
 
@@ -54,12 +55,5 @@ export class GardensComponent implements OnInit, OnChanges {
         console.log(222);
       }
     });
-  }
-
-  imageSrc: string;
-
-  readURL(event: Event): void {
-    console.log(55555555555555);
-    console.log(event);
   }
 }
