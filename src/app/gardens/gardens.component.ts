@@ -67,4 +67,7 @@ export class GardensComponent implements OnInit, OnChanges {
         }));
   }
 
+  showGardenDetails() {
+    console.log(222);
+  }
 }
