@@ -6,6 +6,7 @@ import { CreateGardenComponent } from './create-garden.component';
 import { MatDialog } from '@angular/material';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
+import { Garden } from '../models/garden.model';
 
 @Component({
   selector: 'app-gardens',
@@ -14,7 +15,7 @@ import * as firebase from 'firebase';
 })
 export class GardensComponent implements OnInit, OnChanges {
   
-  private gardens: any[];
+  private gardens: Garden[] = [];
   imageSrc: string;
   images: string[];
   imagesSubscription: Subscription;
@@ -28,9 +29,6 @@ export class GardensComponent implements OnInit, OnChanges {
     ) {}
 
   ngOnInit() {
-    let storage = firebase.storage();
-    let ref = firebase.storage().ref();
-    let ur = ref.child('uploads/Untitled.png').getDownloadURL().then((res) => this.imageSrc = res);
     this.fetchGardens(this.auth.getEmail());
   }
 
@@ -48,12 +46,19 @@ export class GardensComponent implements OnInit, OnChanges {
         .collection('gardens/'+ email + '/data')
         .valueChanges()
         .subscribe((items) => {
-          items.forEach(item => {
-            console.log(5544);
+
+          let ref = firebase.storage().ref();
+          this.gardens = [];
+          items.forEach((item: Garden) => {
             console.log(item);
-            this.gardens.push({ name: '123', url: null });
+            this.gardens.push(new Garden(item.text, item.name, null));
           });
-          console.log(items.length);
+
+          this.gardens.forEach((item: Garden) => {
+            console.log('resize-' + item.name);
+            ref.child('resize-' + item.name).getDownloadURL().then((res) => item.url = res)
+          });
+
           this.gardensChanged.next(items);
 
         }));
