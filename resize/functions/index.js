@@ -1,3 +1,4 @@
+// firebase deploy
 const functions = require('firebase-functions');
 const {Storage} = require('@google-cloud/storage');
 const os = require('os');
@@ -29,7 +30,7 @@ const spawn = require('child-process-promise').spawn;
     return destBucket.file(filePath).download({
         destination: tmpFilePath
     }).then(() => {
-        return spawn('convert', [tmpFilePath, '-resize', '500x500', tmpFilePath]).then(() => {
+        return spawn('convert', [tmpFilePath, '-resize', '250x250', tmpFilePath]).then(() => {
             return destBucket.upload(tmpFilePath, {
                 destination: 'resize-' + path.basename(filePath),
                 metadata: metadata
