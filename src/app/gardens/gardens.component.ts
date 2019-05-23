@@ -56,7 +56,10 @@ export class GardensComponent implements OnInit, OnChanges {
 
           this.gardens.forEach((item: Garden) => {
             console.log('resize-' + item.name);
-            ref.child('resize-' + item.name).getDownloadURL().then((res) => item.url = res)
+            ref.child('resize-' + item.name).getDownloadURL().then((res) => item.url = res).catch(()=>{
+              console.log(33322211);
+              ref.child('uploads/' + item.name).getDownloadURL().then((res) => item.url = res);
+            })
           });
 
           this.gardensChanged.next(items);

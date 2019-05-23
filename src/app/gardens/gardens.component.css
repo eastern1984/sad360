@@ -5,3 +5,29 @@
 .gardens{
     margin: 15px;
 }
+
+.gardens {
+    flex-wrap: wrap;
+  }
+  
+  .mat-card {
+    flex-wrap: wrap;
+    margin: 10px;
+    max-width: 300px;
+    min-width: 200px;
+  }
+  
+  .mat-card-title{
+    text-align: center;
+  }
+
+  .garden-image{
+      width: 100%;
+  }
+  mat-card-content{
+      padding-top: 10px;
+  }
+
+  .open-button{
+    margin: 0 auto;
+  }

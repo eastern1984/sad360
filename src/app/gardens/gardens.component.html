@@ -2,29 +2,19 @@
 
 <div class="row gardens">
   <h2>Ваши участки</h2>
-  <ul>
-    <li *ngFor="let item of gardens" class="img">
+  <section class="gardens" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
       
-      <mat-card class="example-card">
+      <mat-card *ngFor="let item of gardens" fxFlex.xs="100%">
         <mat-card-header>
-          <mat-card-title>{{item.text}}</mat-card-title>
+          <mat-card-title fxLayoutAlign="center">{{item.text}}</mat-card-title>
         </mat-card-header>
-        <img *ngIf="item.url !== null" src="{{ item.url }}">
+        <img class="garden-image" *ngIf="item.url !== null" src="{{ item.url }}">
       <mat-spinner *ngIf="item.url == null"> </mat-spinner>
         <mat-card-content>
-          <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-          </p>
+            <h4>На участке 0 объектов</h4>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>LIKE</button>
-          <button mat-button>SHARE</button>
-        </mat-card-actions>
       </mat-card>
-    </li>
-  </ul>
+  </section>
 </div> 
 <div>
   <img *ngIf="imageSrc" [src]="imageSrc" style="max-width: 200px">
