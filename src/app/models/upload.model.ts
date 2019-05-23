@@ -5,8 +5,10 @@ export class Upload {
     progress: number;
     createdOn: Date = new Date();
     name: string;
+    text: string;
 
-    constructor(file: File) {
+    constructor(file: File, text: string) {
         this.file = file;
+        this.text = text;
     }
 }

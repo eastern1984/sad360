@@ -7,7 +7,7 @@ import {GardensComponent} from './gardens/gardens.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent } ,
-  { path: 'gardens', component: GardensComponent, canLoad: [AuthGuard] }
+  { path: 'gardens', component: GardensComponent, canActivate: [AuthGuard] }
  // { path: 'training', loadChildren: './training/training.module#TrainingModule', canLoad: [AuthGuard] }
 ];
 

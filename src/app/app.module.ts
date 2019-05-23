@@ -20,7 +20,6 @@ import { UIService } from './shared/ui.service';
 import { AuthModule } from './auth/auth.module';
 import {ImageService} from './shared/image.service';
 import {UploadService} from './shared/upload.service';
-import {UploadComponent} from './upload/upload.component';
 import {GardensComponent} from './gardens/gardens.component';
 import { CreateGardenComponent } from './gardens/create-garden.component';
 
@@ -31,8 +30,7 @@ import { CreateGardenComponent } from './gardens/create-garden.component';
     GardensComponent,
     CreateGardenComponent,
     HeaderComponent,
-    SidenavListComponent,
-      UploadComponent
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +41,8 @@ import { CreateGardenComponent } from './gardens/create-garden.component';
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule,
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FormsModule
   ],
   providers: [AuthService, UIService, ImageService, UploadService],
   bootstrap: [AppComponent],

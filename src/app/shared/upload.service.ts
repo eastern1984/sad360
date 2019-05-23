@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
-//import { AngularFireModule } from 'angularfire2';
-import { GalleryImage } from '../models/galleryImage.model';
-
-//import { AngularFireDatabase } from 'angularfire2';
 import { Upload } from '../models/upload.model';
 import * as firebase from 'firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 
 @Injectable()
 export class UploadService {
 
   private basePath = '/uploads';
-  downloadEnd = new Subject<boolean>();
-  //private uploads: AngularFireList<GalleryImage[]>;
+  downloadEnd = new Subject<string>();
 
   constructor(/*private ngFire: AngularFireModule,*/ private db: AngularFirestore) { }
 
-  uploadFile(upload: Upload) {
+  uploadFile(upload: Upload, email) {
     let storageRef = firebase.storage().ref();
-    let uploadTask = storageRef.child(`${this.basePath}/${upload.file.name + Date.now() }`).put(upload.file);
+    let uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) =>  {
@@ -32,23 +28,16 @@ export class UploadService {
         console.log(error);
       },
       () => {
-        console.log(222);
-        // upload success
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          upload.url = downloadURL;
-          upload.name = upload.file.name;
-          console.log(111);
-          console.log(downloadURL);
-          this.saveFileData(upload);
-          this.downloadEnd.next(true);
-        });
+        upload.name = upload.file.name;
+        this.saveFileData(upload, email);
+        this.downloadEnd.next('');
       }
     );
   }
 
-  private saveFileData(upload: Upload) {
-    this.db.collection('uploads/').add({name:upload.url})
-                .then(() => {console.log(5555);})
+  private saveFileData(upload: Upload, email: string) {
+    this.db.collection('gardens/'+ email+'/data').add({name: upload.name, text: upload.text})
+                .then(() => {})
                 .catch((error) => {
                 });
   }

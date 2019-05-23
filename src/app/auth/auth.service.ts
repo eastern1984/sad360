@@ -10,8 +10,10 @@ import { UIService } from '../shared/ui.service';
 
 @Injectable()
 export class AuthService {
+  private  authData: AuthData;
   authChange = new Subject<boolean>();
   private isAuthenticated = false;
+  private email: string;
 
   constructor(
     private router: Router,
@@ -19,9 +21,14 @@ export class AuthService {
     private uiService: UIService
   ) {}
 
+  getEmail () {
+    return this.email;
+  }
+
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
+        this.email = user.email;
         this.isAuthenticated = true;
         this.authChange.next(true);
         this.router.navigate(['/gardens']);
@@ -47,6 +54,7 @@ export class AuthService {
   }
 
   login(authData: AuthData) {
+    this.email = authData.email;
     this.uiService.loadingStateChanged.next(true);
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)

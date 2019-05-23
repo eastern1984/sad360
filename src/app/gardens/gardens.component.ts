@@ -1,10 +1,11 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import {ImageService} from '../shared/image.service';
-import {Observable, Subscription, from} from '../../../node_modules/rxjs';
-import {GalleryImage} from '../models/galleryImage.model';
+import {Observable, Subscription, Subject} from '../../../node_modules/rxjs';
 import { AuthService } from '../auth/auth.service';
 import { CreateGardenComponent } from './create-garden.component';
 import { MatDialog } from '@angular/material';
+import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-gardens',
@@ -13,27 +14,24 @@ import { MatDialog } from '@angular/material';
 })
 export class GardensComponent implements OnInit, OnChanges {
   
+  private gardens: any[];
+  imageSrc: string;
   images: string[];
   imagesSubscription: Subscription;
- // @Output() openNote = new EventEmitter<string>();
-  
- // images: Observable<GalleryImage[]>;
+  gardensChanged = new Subject<any>();
+  private fbSubs: Subscription[] = [];
 
   constructor(
-    private imageService: ImageService, 
-    private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private db: AngularFirestore,
+    private auth: AuthService
     ) {}
 
   ngOnInit() {
-    this.imagesSubscription = this.imageService.imageChanged.subscribe(
-      (images) => {
-          this.images = images;
-          console.log(images);
-      });
-  //this.imageService.getImages(this.authService.getEmail());
-
-  //  this.images = this.imageService.getImages();
+    let storage = firebase.storage();
+    let ref = firebase.storage().ref();
+    let ur = ref.child('uploads/Untitled.png').getDownloadURL().then((res) => this.imageSrc = res);
+    this.fetchGardens(this.auth.getEmail());
   }
 
   ngOnChanges() {
@@ -41,19 +39,24 @@ export class GardensComponent implements OnInit, OnChanges {
   }
 
   createGarden() {
-    const dialogRef = this.dialog.open(CreateGardenComponent, {
-      data: {
-        message: 'Message`123',
-        dialog: this.dialog
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(333);
-      } else {
-        console.log(222);
-      }
-    });
+    const dialogRef = this.dialog.open(CreateGardenComponent, {});
   }
+
+  fetchGardens(email) {
+    console.log(5555+''+email);
+    this.fbSubs.push(this.db
+        .collection('gardens/'+ email + '/data')
+        .valueChanges()
+        .subscribe((items) => {
+          items.forEach(item => {
+            console.log(5544);
+            console.log(item);
+            this.gardens.push({ name: '123', url: null });
+          });
+          console.log(items.length);
+          this.gardensChanged.next(items);
+
+        }));
+  }
+
 }

@@ -1,14 +1,16 @@
-<button mat-raised-button color="primary" (click)='createGarden()'>Создать</button>
+<button class="create_garden" mat-raised-button color="primary" (click)='createGarden()'>Создать</button>
 
-<app-upload></app-upload>
-
-<div class="row">
-  <h2>Photos</h2>
+<div class="row gardens">
+  <h2>Ваши участки</h2>
   <ul>
-    <li *ngFor="let image of images | async" class="img">
-      <a [routerLink]="['/image', image.$key]"></a>
-      <img src="{{ image.url }}">
+    <li *ngFor="let item of gardens | async" class="img">
+      <h3>{{item.name}}</h3>
+      <img *ngIf="item.url !== null" src="{{ item.url }}">
+      <mat-progress-bar *ngIf="item.url == null" [color]="color" [mode]="mode" [value]="indeterminate" style="width: 80%;"> </mat-progress-bar>
       <a></a>
     </li>
   </ul>
 </div> 
+<div>
+  <img *ngIf="imageSrc" [src]="imageSrc" style="max-width: 200px">
+</div>
