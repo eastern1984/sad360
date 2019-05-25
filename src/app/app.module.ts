@@ -18,10 +18,11 @@ import { AuthService } from './auth/auth.service';
 import { environment } from '../environments/environment';
 import { UIService } from './shared/ui.service';
 import { AuthModule } from './auth/auth.module';
-import {ImageService} from './shared/image.service';
 import {UploadService} from './shared/upload.service';
 import {GardensComponent} from './gardens/gardens.component';
 import { CreateGardenComponent } from './gardens/create-garden.component';
+import { GardenDetailsComponent } from './garden-details/garden-details.component';
+import { CurrentGardenService } from './gardens/current-garden.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CreateGardenComponent } from './gardens/create-garden.component';
     GardensComponent,
     CreateGardenComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    GardenDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,7 @@ import { CreateGardenComponent } from './gardens/create-garden.component';
     AngularFireAuthModule,
     FormsModule
   ],
-  providers: [AuthService, UIService, ImageService, UploadService],
+  providers: [AuthService, UIService, UploadService, CurrentGardenService],
   bootstrap: [AppComponent],
   entryComponents: [CreateGardenComponent]
 })

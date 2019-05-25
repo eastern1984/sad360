@@ -1,5 +1,4 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import {ImageService} from '../shared/image.service';
 import {Observable, Subscription, Subject} from '../../../node_modules/rxjs';
 import { AuthService } from '../auth/auth.service';
 import { CreateGardenComponent } from './create-garden.component';
@@ -7,6 +6,8 @@ import { MatDialog } from '@angular/material';
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
 import { Garden } from '../models/garden.model';
+import { CurrentGardenService } from './current-garden.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gardens',
@@ -23,9 +24,11 @@ export class GardensComponent implements OnInit, OnChanges {
   private fbSubs: Subscription[] = [];
 
   constructor(
+    private router: Router,
     private dialog: MatDialog,
     private db: AngularFirestore,
-    private auth: AuthService
+    private auth: AuthService,
+    private currentGarden: CurrentGardenService
     ) {}
 
   ngOnInit() {
@@ -44,30 +47,28 @@ export class GardensComponent implements OnInit, OnChanges {
     console.log(5555+''+email);
     this.fbSubs.push(this.db
         .collection('gardens/'+ email + '/data')
-        .valueChanges()
+        .snapshotChanges()
         .subscribe((items) => {
-
           let ref = firebase.storage().ref();
           this.gardens = [];
-          items.forEach((item: Garden) => {
-            console.log(item);
-            this.gardens.push(new Garden(item.text, item.name, null));
+          items.forEach((item) => {
+            this.gardens.push(new Garden(item.payload.doc.id, item.payload.doc.data().text, item.payload.doc.data().name, null));
           });
 
           this.gardens.forEach((item: Garden) => {
-            console.log('resize-' + item.name);
             ref.child('resize-' + item.name).getDownloadURL().then((res) => item.url = res).catch(()=>{
-              console.log(33322211);
               ref.child('uploads/' + item.name).getDownloadURL().then((res) => item.url = res);
             })
           });
 
           this.gardensChanged.next(items);
-
         }));
   }
 
-  showGardenDetails() {
-    console.log(222);
+  showGardenDetails(item) {
+    this.currentGarden.id = item.id;
+    this.currentGarden.name = item.name;
+    this.currentGarden.text = item.text;
+    this.router.navigate(['/garden-details']);
   }
 }

@@ -10,6 +10,14 @@
     flex-wrap: wrap;
   }
   
+  .mat-card:hover {
+    opacity: 0.6;
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
   .mat-card {
     flex-wrap: wrap;
     margin: 10px;

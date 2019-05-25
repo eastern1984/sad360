@@ -1,0 +1,10 @@
+img {
+    max-width: 80%;
+    max-height: calc(100vh - 140px);
+    margin-left: 10px;
+    display: block;
+}
+
+h2 {
+    display: inline;
+}
