@@ -24,12 +24,17 @@ export class GardenDetailsComponent implements OnInit {
     ref.child('uploads/' + this.currentGarden.name).getDownloadURL().then((res) => this.imageSrc = res);
   }
 
-  putItem(e) {
+  putItem(e) {console.log(e.target.tagName);
+    if (e.target.tagName.toLowerCase() == 'img') {
     var rect = e.target.getBoundingClientRect();
     var x = e.clientX - rect.left - 2; //x position within the element.
     var y = e.clientY - rect.top - 11;
     this.items.push({x: x, y: y});
     console.log(this.items);
+    }
   }
 
+  openItem(item) {
+    console.log(11111, item);
+  }
 }
