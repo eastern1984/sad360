@@ -1,6 +1,7 @@
 <span>
   <h2>  {{text}}</h2>
 </span>
+
 <mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
 <a (click)="putItem($event)" >
   <img class="garden-image" *ngIf="imageSrc !== null" src="{{ imageSrc }}">
