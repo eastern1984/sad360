@@ -3,6 +3,11 @@
 </span>
 
 <mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
-<a (click)="putItem($event)" >
-  <img class="garden-image" *ngIf="imageSrc !== null" src="{{ imageSrc }}">
-</a>
+
+<div class="main_image">
+  <a (click)="putItem($event)">
+    <img class="garden-image" *ngIf="imageSrc !== null" src="{{ imageSrc }}">
+      <mat-icon *ngFor="let item of items" class="items_icon" color="warn" [style.left.px]="item.x" [style.top.px]="item.y">radio_button_checked</mat-icon>
+  </a>
+</div>
+  

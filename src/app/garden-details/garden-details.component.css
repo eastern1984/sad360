@@ -8,3 +8,11 @@ img {
 h2 {
     display: inline;
 }
+
+.main_image {
+    position: relative;
+}
+
+.items_icon {
+    position: absolute;
+}

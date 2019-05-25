@@ -2,6 +2,25 @@
     margin: 15px;
 }
 
+.qwerty {
+  position: relative;
+  margin: 10px;
+}
+.test {
+  max-width: 80%;
+  max-height: calc(100vh - 140px);
+  margin-left: 10px;
+  display: block;
+}
+
+.test2 {
+  position: absolute;
+  cursor: move;
+  left: 0px;
+  top: 0px;
+}
+
+
 .gardens{
     margin: 15px;
 }
