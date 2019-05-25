@@ -15,4 +15,5 @@ h2 {
 
 .items_icon {
     position: absolute;
+    cursor: default;
 }

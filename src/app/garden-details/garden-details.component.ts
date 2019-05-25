@@ -26,8 +26,8 @@ export class GardenDetailsComponent implements OnInit {
 
   putItem(e) {
     var rect = e.target.getBoundingClientRect();
-    var x = e.clientX - rect.left; //x position within the element.
-    var y = e.clientY - rect.top;
+    var x = e.clientX - rect.left - 2; //x position within the element.
+    var y = e.clientY - rect.top - 11;
     this.items.push({x: x, y: y});
     console.log(this.items);
   }
