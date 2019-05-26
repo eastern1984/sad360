@@ -23,6 +23,7 @@ import {GardensComponent} from './gardens/gardens.component';
 import { CreateGardenComponent } from './gardens/create-garden.component';
 import { GardenDetailsComponent } from './garden-details/garden-details.component';
 import { CurrentGardenService } from './gardens/current-garden.service';
+import { CreateDescriptionComponent } from './garden-details/create-description.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { CurrentGardenService } from './gardens/current-garden.service';
     WelcomeComponent,
     GardensComponent,
     CreateGardenComponent,
+    CreateDescriptionComponent,
     HeaderComponent,
     SidenavListComponent,
     GardenDetailsComponent
@@ -44,10 +46,11 @@ import { CurrentGardenService } from './gardens/current-garden.service';
     AuthModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, UIService, UploadService, CurrentGardenService],
   bootstrap: [AppComponent],
-  entryComponents: [CreateGardenComponent]
+  entryComponents: [CreateGardenComponent, CreateDescriptionComponent]
 })
 export class AppModule { }

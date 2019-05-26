@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentGardenService } from '../gardens/current-garden.service';
 import * as firebase from 'firebase';
+import { MatDialog } from '@angular/material';
+import { CreateDescriptionComponent } from './create-description.component';
 
 @Component({
   selector: 'app-garden-details',
@@ -12,10 +14,12 @@ export class GardenDetailsComponent implements OnInit {
   private text: string;
   private imageSrc: string;
   private items: any[] = [];
+  private ChoosingItems: any[] = [];
 
-  constructor(private currentGarden: CurrentGardenService) { 
-    
-  }
+  constructor(
+    private currentGarden: CurrentGardenService,
+    private dialog: MatDialog
+    ) {}
 
   ngOnInit() {
     this.text = this.currentGarden.text;
@@ -35,6 +39,30 @@ export class GardenDetailsComponent implements OnInit {
   }
 
   openItem(item) {
-    console.log(11111, item);
+    const dialogRef = this.dialog.open(CreateDescriptionComponent, {
+      data: {
+        item: item
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
+  clearNew(type) {
+    if (type) {
+      this.items = [];
+    } else {
+      this.items.pop();
+    }
+  }
+
+  clearChoosing() {
+    this.ChoosingItems = [];
+  }
+
+  deleteChoosing() {
+
   }
 }

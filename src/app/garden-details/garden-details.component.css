@@ -1,15 +1,28 @@
 img {
-    max-width: 80%;
+    max-width: 100%;
     max-height: calc(100vh - 140px);
     margin-left: 10px;
     display: block;
 }
 
-h2 {
-    display: inline;
+.action_button {
+    min-width: 100px;
+    margin-top: 10px;
 }
 
+.wrapper {
+    text-align: center;
+}
+
+
+
 .main_image {
+    margin-top: 10px; 
+    text-align: center;
+    position: relative;
+}
+
+.garden_image {
     position: relative;
 }
 

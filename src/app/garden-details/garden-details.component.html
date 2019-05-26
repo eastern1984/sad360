@@ -1,13 +1,28 @@
-<span>
-  <h2>  {{text}}</h2>
-</span>
-
-<mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
-
-<div class="main_image">
-  <a (click)="putItem($event)">
-    <img class="garden-image" *ngIf="imageSrc !== null" src="{{ imageSrc }}">
-      <mat-icon (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.px]="item.x" [style.top.px]="item.y">radio_button_checked</mat-icon>
-  </a>
+<div class="garden_title">
+  <h2 align="center">  {{text}}</h2>
 </div>
-  
+
+<mat-tab-group>
+    <mat-tab label="Карта"> 
+        <div class="wrapper">
+        <button class="action_button" mat-raised-button color="primary" (click)='updateItem()'>Редактировать описание</button>
+        <button class="action_button" mat-raised-button color="primary" (click)='clearChoosing()'>Очистить выделение</button>  
+        <button class="action_button" mat-raised-button color="primary" (click)='clearNew(false)'>Назад</button>  
+        <button class="action_button" mat-raised-button color="warn" (click)='clearNew(true)'>Удалить новые</button>
+        <button class="action_button" mat-raised-button color="warn" (click)='deleteChoosing()'>Удалить выделенные</button>  
+    </div>
+    
+    <mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
+    
+    <div class="main_image" fxLayout="row" fxLayoutAlign="center">
+      <a class="garden_image" (mousedown)="putItem($event)">
+        <img  *ngIf="imageSrc !== null" src="{{ imageSrc }}">
+          <mat-icon (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.px]="item.x" [style.top.px]="item.y">radio_button_checked</mat-icon>
+      </a>
+    </div>
+      
+    </mat-tab>
+    <mat-tab label="Таблица">  </mat-tab>
+    <mat-tab label="Настройки">  </mat-tab>
+  </mat-tab-group>
+
