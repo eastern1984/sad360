@@ -17,7 +17,7 @@
     <div class="main_image" fxLayout="row" fxLayoutAlign="center">
       <a class="garden_image" (mousedown)="putItem($event)">
         <img  *ngIf="imageSrc !== null" src="{{ imageSrc }}">
-          <mat-icon (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.px]="item.x" [style.top.px]="item.y">radio_button_checked</mat-icon>
+          <mat-icon (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.x" [style.top.%]="item.y">radio_button_checked</mat-icon>
       </a>
     </div>
       

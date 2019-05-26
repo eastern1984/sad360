@@ -30,12 +30,14 @@ export class GardenDetailsComponent implements OnInit {
 
   putItem(e) {console.log(e.target.tagName);
     if (e.target.tagName.toLowerCase() == 'img') {
-    var rect = e.target.getBoundingClientRect();
-    var x = e.clientX - rect.left - 2; //x position within the element.
-    var y = e.clientY - rect.top - 11;
-    this.items.push({x: x, y: y});
-    console.log(this.items);
-    }
+        let rect = e.target.getBoundingClientRect();
+        let deltaX = (2 / rect.width) * 100;
+        let deltaY = (11 / rect.height) * 100;
+
+        let x = (((e.clientX - rect.left) / rect.width) * 100) - deltaX; //x position within the element.
+        let y = (((e.clientY - rect.top) / rect.height) * 100) - deltaY;
+        this.items.push({x: x, y: y});
+      }
   }
 
   openItem(item) {
