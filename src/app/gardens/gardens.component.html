@@ -13,7 +13,7 @@
         <img class="garden-image" *ngIf="item.url !== null" src="{{ item.url }}">
       <mat-spinner *ngIf="item.url == null"> </mat-spinner>
         <mat-card-content>
-            <h4>На участке 0 объектов</h4>
+            <h4>Число объектов: {{ (item.items.length) ? item.items.length : 0 }}</h4>
         </mat-card-content>
       </mat-card>
   </section>
@@ -21,11 +21,3 @@
 <div>
   <img *ngIf="imageSrc" [src]="imageSrc" style="max-width: 200px">
 </div>
-
-
-<div style="display: none;" class="qwerty">
-  <a>
-    <img class="test" src2222="https://firebasestorage.googleapis.com/v0/b/sad360-b2790.appspot.com/o/uploads%2FIMG_20190519_131121.jpg?alt=media&token=5bf5a0dc-be88-4e11-badf-dba25ad45daa">
-      <mat-icon class="test2" color="warn">radio_button_checked</mat-icon>
-  </a>
-  </div>

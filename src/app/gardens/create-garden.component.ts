@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-create-garden',
   template:  `<h1 mat-dialog-title>Создать сад</h1>
-                  <mat-dialog-content fxLayout="column"  fxLayoutAlign="center center"  fxLayoutGap="10px" style="min-width: 400px; padding: 5px; margin: 0 px;">
+                  <mat-dialog-content fxLayout="column"  fxLayoutAlign="center center"  fxLayoutGap="10px" style="margin: 0; width: 400px; padding: 5px; margin: 0 px;">
                     <mat-form-field>
                     <input
                       type="text"

@@ -18,7 +18,7 @@ export interface DialogData {
   template:  `
                 
                   <h1 mat-dialog-title>{{ (data.id) ? 'Редактирование' : 'Добавление'}} описания к точке</h1>
-                    <mat-dialog-content fxLayoutAlign="center right" fxLayout="column" fxLayoutGap="10px" style="min-width: 400px; padding: 10px; margin: 0px;">
+                    <mat-dialog-content fxLayoutAlign="center right" fxLayout="column" fxLayoutGap="10px" style="margin: 0; width: 400px; padding: 10px; margin: 0px;">
                         <mat-form-field *ngIf="!showSpinner" style="width: 60%;">
                           <input type="text" matInput [(ngModel)]="data.name" placeholder="Введите название">
                           <mat-error>Введите название.</mat-error>

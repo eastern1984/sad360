@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { CurrentGardenService } from '../gardens/current-garden.service';
 import * as firebase from 'firebase';
 import { MatDialog } from '@angular/material';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './garden-details.component.html',
   styleUrls: ['./garden-details.component.css']
 })
-export class GardenDetailsComponent implements OnInit {
+export class GardenDetailsComponent implements OnInit, OnDestroy {
 
   private id: string;
   private text: string;
@@ -30,7 +30,6 @@ export class GardenDetailsComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    console.log(7777, this.db);
     this.text = this.currentGarden.text;
     this.id = this.currentGarden.id;
     let ref = firebase.storage().ref();
@@ -55,7 +54,7 @@ export class GardenDetailsComponent implements OnInit {
     }));
   }
 
-  putItem(e) {console.log(e.target.tagName);
+  putItem(e) {
     if (e.target.tagName.toLowerCase() == 'img') {
         let rect = e.target.getBoundingClientRect();
         let deltaX = (2 / rect.width) * 100;
@@ -82,7 +81,7 @@ export class GardenDetailsComponent implements OnInit {
       if (result) 
       {
         if (item.id) {
-          this.db.collection('item').doc(item.id).update({name: result.name, description: result.description}).then((res) => {console.log(77777)});
+          this.db.collection('item').doc(item.id).update({name: result.name, description: result.description}).then((res) => {}).catch(error => console.log(error));
         } else {
           this.db.collection('item').add(result).then((res) => {
             if (this.currentGarden.items) { 
@@ -110,6 +109,9 @@ export class GardenDetailsComponent implements OnInit {
   }
 
   deleteChoosing() {
+  }
 
+  ngOnDestroy() {
+    this.fbSubs.forEach((sub) => sub.unsubscribe());
   }
 }
