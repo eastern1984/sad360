@@ -21,7 +21,7 @@
           <mat-icon (click)="openItem(item)" *ngFor="let item2 of itemsDb" class="items_icon" color="warn" [style.left.%]="item2.x" [style.top.%]="item2.y">radio_button_checked</mat-icon>
       </a>
     </div>
-      
+      <h1 *ngFor="let item2 of itemsDb">123</h1>
     </mat-tab>
     <mat-tab label="Таблица">  </mat-tab>
     <mat-tab label="Настройки">  </mat-tab>

@@ -36,6 +36,7 @@ export class GardenDetailsComponent implements OnInit {
     this.db.collection('item', ref => ref.where('parent', '==', this.id)).valueChanges().subscribe(data => {
       this.itemsDb = data;
       console.log(55555, data);
+      console.log(55555, this.itemsDb);
     });
   }
 
