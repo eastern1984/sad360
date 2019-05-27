@@ -33,6 +33,12 @@ export class GardensComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.fetchGardens(this.auth.getEmail());
+
+
+  //  this.db.collection('item').doc('BTru7Hhl524TgKPFq6d0').snapshotChanges().subscribe((data)=> {
+    //  console.log(5555, data.payload.data());
+  //    this.db.collection('item').doc('BTru7Hhl524TgKPFq6d0').set({name: "fffffg69", description: "ddddd", item: {x: 68.59247112706917, y: 69.359167}, parent: "fH0P5UzpdATxP17ddYnG"}).then((res) => {console.log(77777)});
+   // });
   }
 
   ngOnChanges() {

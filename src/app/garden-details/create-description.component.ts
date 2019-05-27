@@ -6,16 +6,18 @@ import { Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 export interface DialogData {
+  id: string;
   name: string;
   description: string;
   parent: string;
+  coord: any[];
 }
 
 @Component({
   selector: 'app-create-description',
   template:  `
                 
-                  <h1 mat-dialog-title>Добавьте описание к точке</h1>
+                  <h1 mat-dialog-title>{{ (data.id) ? 'Редактирование' : 'Добавление'}} описания к точке</h1>
                     <mat-dialog-content fxLayoutAlign="center right" fxLayout="column" fxLayoutGap="10px" style="min-width: 400px; padding: 10px; margin: 0px;">
                         <mat-form-field *ngIf="!showSpinner" style="width: 60%;">
                           <input type="text" matInput [(ngModel)]="data.name" placeholder="Введите название">
@@ -35,8 +37,8 @@ export interface DialogData {
 })
 export class CreateDescriptionComponent implements OnDestroy, OnInit{
 
-    private name: string;
-    private description: string;
+    private name: string = this.data.name;
+    private description: string = this.data.description;
     private showSpinner: boolean = false;
   
   constructor(
@@ -47,7 +49,7 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
   }
 
   ngOnInit() {
-    console.log(this.data);
+    console.log(222222, this.data);
   }
 
   previewImage(event): void { 
@@ -55,13 +57,8 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
 
   createItem() {
       this.showSpinner = true;
-
-      this.db.collection('item').add({...this.data, parent: this.data.parent}).then(
-        (result) => {
-          console.log(888999888);
-          this.dialogRef.close(result.id);
-        }
-      );
+      console.log(222333, this.data.id);
+      this.dialogRef.close({name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent});
   }
 
   ngOnDestroy () {

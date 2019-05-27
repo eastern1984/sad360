@@ -15,13 +15,12 @@
     <mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
     
     <div class="main_image" fxLayout="row" fxLayoutAlign="center">
-      <a class="garden_image" (mousedown)="putItem($event)">
+      <a class="garden_image" (touchstart)="putItem($event)" (mousedown)="putItem($event)">
         <img  *ngIf="imageSrc !== null" src="{{ imageSrc }}">
-          <mat-icon (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.x" [style.top.%]="item.y">radio_button_checked</mat-icon>
-          <mat-icon (click)="openItem(item)" *ngFor="let item2 of itemsDb" class="items_icon" color="warn" [style.left.%]="item2.x" [style.top.%]="item2.y">radio_button_checked</mat-icon>
+          <mat-icon  matTooltip="<Название>" (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.coord.x" [style.top.%]="item.coord.y">radio_button_checked</mat-icon>
+          <mat-icon (touchstart)="openItem(itemOld)" (click)="openItem(itemOld)" #tooltip="matTooltip"  matTooltip="{{ itemOld.name }}" *ngFor="let itemOld of itemsDb" class="items_icon" color="accent" [style.left.%]="itemOld.coord.x" [style.top.%]="itemOld.coord.y">radio_button_checked</mat-icon>
       </a>
     </div>
-      <h1 *ngFor="let item2 of itemsDb">123</h1>
     </mat-tab>
     <mat-tab label="Таблица">  </mat-tab>
     <mat-tab label="Настройки">  </mat-tab>
