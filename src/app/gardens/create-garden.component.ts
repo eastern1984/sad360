@@ -44,8 +44,6 @@ export class CreateGardenComponent implements OnDestroy{
         this.dialogRef.close(true);
       }
     );
-    console.log(222222);
-    console.log(this.auth);
   }
 
   private showBar: boolean = false;

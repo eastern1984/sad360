@@ -3,12 +3,13 @@ export class Garden {
     name: string;
     url: string;
     text: string;
-    itemIds?: string[];
+    items: string[];
 
-    constructor(id, text, name, url) {
+    constructor(id, text, name, url, items) {
       this.id = id;
       this.name = name;
       this.text = text;
       this.url = url;      
+      this.items = items;
     }
 }

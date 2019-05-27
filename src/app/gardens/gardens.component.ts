@@ -44,7 +44,6 @@ export class GardensComponent implements OnInit, OnChanges {
   }
 
   fetchGardens(email) {
-    console.log(5555+''+email);
     this.fbSubs.push(this.db
         .collection('gardens/'+ email + '/data')
         .snapshotChanges()
@@ -52,7 +51,8 @@ export class GardensComponent implements OnInit, OnChanges {
           let ref = firebase.storage().ref();
           this.gardens = [];
           items.forEach((item) => {
-            this.gardens.push(new Garden(item.payload.doc.id, item.payload.doc.data().text, item.payload.doc.data().name, null));
+            console.log(11111,item.payload.doc.data());
+            this.gardens.push(new Garden(item.payload.doc.id, item.payload.doc.data().text, item.payload.doc.data().name, null, item.payload.doc.data().items));
           });
 
           this.gardens.forEach((item: Garden) => {
@@ -69,6 +69,8 @@ export class GardensComponent implements OnInit, OnChanges {
     this.currentGarden.id = item.id;
     this.currentGarden.name = item.name;
     this.currentGarden.text = item.text;
+    this.currentGarden.items = item.items;
+    console.log(item);
     this.router.navigate(['/garden-details']);
   }
 }

@@ -3,6 +3,8 @@ import { CurrentGardenService } from '../gardens/current-garden.service';
 import * as firebase from 'firebase';
 import { MatDialog } from '@angular/material';
 import { CreateDescriptionComponent } from './create-description.component';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-garden-details',
@@ -14,18 +16,27 @@ export class GardenDetailsComponent implements OnInit {
   private text: string;
   private imageSrc: string;
   private items: any[] = [];
+  private itemsDb: any = [];
   private ChoosingItems: any[] = [];
 
   constructor(
     private currentGarden: CurrentGardenService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private db: AngularFirestore,
+    private auth: AuthService
     ) {}
 
   ngOnInit() {
     this.text = this.currentGarden.text;
     this.id = this.currentGarden.id;
+    console.log (this.currentGarden);
     let ref = firebase.storage().ref();
     ref.child('uploads/' + this.currentGarden.name).getDownloadURL().then((res) => this.imageSrc = res);
+
+    this.db.collection('item', ref => ref.where('parent', '==', this.id)).valueChanges().subscribe(data => {
+      this.itemsDb = data;
+      console.log(55555, data);
+    });
   }
 
   putItem(e) {console.log(e.target.tagName);
@@ -43,12 +54,18 @@ export class GardenDetailsComponent implements OnInit {
   openItem(item) {
     const dialogRef = this.dialog.open(CreateDescriptionComponent, {
       data: {
-        item: item
+        item: item,
+        parent: this.id
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if (result) 
+      {
+        this.currentGarden.items.push(result);
+        this.db.collection('gardens/' + this.auth.getEmail() +'/data').doc(this.id).set({name: this.currentGarden.name, text: this.currentGarden.text, items: this.currentGarden.items});
+        console.log(result);
+      }
     });
   }
 

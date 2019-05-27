@@ -8,6 +8,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export interface DialogData {
   name: string;
   description: string;
+  parent: string;
 }
 
 @Component({
@@ -15,12 +16,12 @@ export interface DialogData {
   template:  `
                 
                   <h1 mat-dialog-title>Добавьте описание к точке</h1>
-                    <mat-dialog-content fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px" style="min-width: 400px; padding: 5px; margin: 0 px;">
-                        <mat-form-field *ngIf="!showSpinner">
+                    <mat-dialog-content fxLayoutAlign="center right" fxLayout="column" fxLayoutGap="10px" style="min-width: 400px; padding: 10px; margin: 0px;">
+                        <mat-form-field *ngIf="!showSpinner" style="width: 60%;">
                           <input type="text" matInput [(ngModel)]="data.name" placeholder="Введите название">
                           <mat-error>Введите название.</mat-error>
                         </mat-form-field>
-                        <mat-form-field *ngIf="!showSpinner" style="width: 300px;">
+                        <mat-form-field *ngIf="!showSpinner" style="width: 90%;">
                           <textarea type="text" matInput [(ngModel)]="data.description" rows="5" placeholder="Описание"> </textarea>
                         </mat-form-field>   
                         <mat-spinner *ngIf="showSpinner"> </mat-spinner>                
@@ -55,7 +56,7 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
   createItem() {
       this.showSpinner = true;
 
-      this.db.collection('item').add(this.data).then(
+      this.db.collection('item').add({...this.data, parent: this.data.parent}).then(
         (result) => {
           console.log(888999888);
           this.dialogRef.close(result.id);

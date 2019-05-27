@@ -5,6 +5,7 @@ export class CurrentGardenService {
   id: string = null;
   name: string = null;
   text: string = null;
+  items: string[];
 
   constructor() { }
 }

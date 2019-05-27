@@ -36,7 +36,7 @@ export class UploadService {
   }
 
   private saveFileData(upload: Upload, email: string) {
-    this.db.collection('gardens/'+ email+'/data').add({name: upload.name, text: upload.text})
+    this.db.collection('gardens/'+ email+'/data').add({name: upload.name, text: upload.text, items: []})
                 .then(() => {})
                 .catch((error) => {
                 });
