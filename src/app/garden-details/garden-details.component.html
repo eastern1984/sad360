@@ -18,7 +18,10 @@
       <a class="garden_image" (touchstart)="putItem($event)" (mousedown)="putItem($event)">
         <img  *ngIf="imageSrc !== null" src="{{ imageSrc }}">
           <mat-icon  matTooltip="<Название>" (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.coord.x" [style.top.%]="item.coord.y">radio_button_checked</mat-icon>
-          <mat-icon (touchstart)="openItem(itemOld)" (click)="openItem(itemOld)" #tooltip="matTooltip"  matTooltip="{{ itemOld.name }}" *ngFor="let itemOld of itemsDb" class="items_icon" color="accent" [style.left.%]="itemOld.coord.x" [style.top.%]="itemOld.coord.y">radio_button_checked</mat-icon>
+          <div class="items_icon" *ngFor="let itemOld of itemsDb" [style.left.%]="itemOld.coord.x" [style.top.%]="itemOld.coord.y">
+            <mat-icon class="items_icon" (touchstart)="openItem(itemOld)" (click)="openItem(itemOld)" color="accent" >radio_button_checked</mat-icon>
+            <span class="tooltip">{{ itemOld.name }}</span>
+          </div>
       </a>
     </div>
     </mat-tab>

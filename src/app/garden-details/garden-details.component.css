@@ -30,3 +30,14 @@ img {
     position: absolute;
     cursor: default;
 }
+
+.tooltip {
+    font-size: 10px;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    background-color: gray;
+    border-radius: 4px;
+    padding: 5px;
+    color: white;
+    top: 28px;
+}

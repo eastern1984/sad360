@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { CurrentGardenService } from '../gardens/current-garden.service';
 import * as firebase from 'firebase';
 import { MatDialog } from '@angular/material';
@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./garden-details.component.css']
 })
 export class GardenDetailsComponent implements OnInit {
+
   private id: string;
   private text: string;
   private imageSrc: string;
@@ -67,7 +68,6 @@ export class GardenDetailsComponent implements OnInit {
   }
 
   openItem(item) {
-    console.log(44444, item);
     const dialogRef = this.dialog.open(CreateDescriptionComponent, {
       data: {
         id: item.id,
@@ -82,11 +82,8 @@ export class GardenDetailsComponent implements OnInit {
       if (result) 
       {
         if (item.id) {
-          console.log('update');
           this.db.collection('item').doc(item.id).update({name: result.name, description: result.description}).then((res) => {console.log(77777)});
-         // this.db.collection('item').doc(item.id).set(result).then(res => console.log(123, res));
         } else {
-          console.log('new');
           this.db.collection('item').add(result).then((res) => {
             if (this.currentGarden.items) { 
               this.currentGarden.items.push(res.id); 
