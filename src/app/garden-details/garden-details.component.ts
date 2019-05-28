@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CurrentGardenService } from '../gardens/current-garden.service';
 import * as firebase from 'firebase';
 import { MatDialog } from '@angular/material';
@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class GardenDetailsComponent implements OnInit, OnDestroy {
 
+  @ViewChild('logo') logo: ElementRef;
   private id: string;
   private text: string;
   private imageSrc: string;
@@ -30,6 +31,7 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit() {
+    window.addEventListener('scroll', this.test, true);
     this.text = this.currentGarden.text;
     this.id = this.currentGarden.id;
     let ref = firebase.storage().ref();
@@ -54,9 +56,15 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     }));
   }
 
+test(e) {
+  console.log(7477, (this.logo.nativeElement as HTMLImageElement).naturalWidth);
+  console.log(888, e.nativeElement);
+}
+
   putItem(e) {
     if (e.target.tagName.toLowerCase() == 'img') {
         let rect = e.target.getBoundingClientRect();
+
         let deltaX = (2 / rect.width) * 100;
         let deltaY = (11 / rect.height) * 100;
 
