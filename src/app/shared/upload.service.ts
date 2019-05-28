@@ -16,7 +16,9 @@ export class UploadService {
 
   uploadFile(upload: Upload, email) {
     let storageRef = firebase.storage().ref();
-    let uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
+    let date = new Date(); 
+    let unicName = date.getTime() + upload.file.name;
+    let uploadTask = storageRef.child(`${this.basePath}/${unicName}`).put(upload.file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) =>  {
@@ -29,14 +31,14 @@ export class UploadService {
       },
       () => {
         upload.name = upload.file.name;
-        this.saveFileData(upload, email);
+        this.saveFileData(upload, email, unicName);
         this.downloadEnd.next('');
       }
     );
   }
 
-  private saveFileData(upload: Upload, email: string) {
-    this.db.collection('gardens/'+ email+'/data').add({name: upload.name, text: upload.text, items: []})
+  private saveFileData(upload: Upload, email: string, unicName: string) {
+    this.db.collection('gardens/'+ email+'/data').add({name: unicName, text: upload.text, items: []})
                 .then(() => {})
                 .catch((error) => {
                 });
