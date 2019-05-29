@@ -71,7 +71,7 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     if (e.target.tagName.toLowerCase() == 'img') {
         let rect = e.target.getBoundingClientRect();
 
-        let deltaX = (2 / rect.width) * 100;
+        let deltaX = (10 / rect.width) * 100;
         let deltaY = (11 / rect.height) * 100;
 
         let x = (((e.clientX - rect.left) / rect.width) * 100) - deltaX; //x position within the element.

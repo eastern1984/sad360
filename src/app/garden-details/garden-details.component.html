@@ -1,21 +1,13 @@
 <div class="garden_title">
-  <h2 align="center">  {{text}}</h2>
+  <h2 class="garden_title_h2" align="center">  {{text}}</h2>
 </div>
-
 <mat-tab-group>
     <mat-tab label="Карта"> 
-        <div class="wrapper">
-        <button class="action_button" mat-raised-button color="primary" (click)='updateItem()'>Редактировать описание</button>
-        <button class="action_button" mat-raised-button color="primary" (click)='clearChoosing()'>Очистить выделение</button>  
-        <button class="action_button" mat-raised-button color="primary" (click)='clearNew(false)'>Назад</button>  
-        <button class="action_button" mat-raised-button color="warn" (click)='clearNew(true)'>Удалить новые</button>
-        <button class="action_button" mat-raised-button color="warn" (click)='deleteChoosing()'>Удалить выделенные</button>  
-    </div>
-    
+
     <mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
     
-    <div class="main_image" fxLayout="row" fxLayoutAlign="center">
-      <a class="garden_image" (touchstart)="putItem($event)" (mousedown)="putItem($event)" (scrolled)="test2()" (wheel)="test2($event)">
+    <div class="main_image" fxLayout="row" fxLayoutAlign="center" (wheel)="test2($event)">
+      <a class="garden_image" (touchstart)="putItem($event)" (mousedown)="putItem($event)" (scrolled)="test2()">
         <img  #logo *ngIf="imageSrc !== null" src="{{ imageSrc }}" (load)="test($event)">
           <mat-icon  matTooltip="<Название>" (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.coord.x" [style.top.%]="item.coord.y">radio_button_checked</mat-icon>
           <div class="items_icon" *ngFor="let itemOld of itemsDb" [style.left.%]="itemOld.coord.x" [style.top.%]="itemOld.coord.y">

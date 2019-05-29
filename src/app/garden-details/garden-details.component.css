@@ -1,8 +1,17 @@
 img {
-    max-width: 100%;
-    max-height: calc(100vh - 140px);
-    margin-left: 10px;
+   /* max-width: 100%;
+    max-height: calc(100vh - 165px);*/
     display: block;
+    margin: 0;
+}
+
+.main_image {
+    height: calc(100vh - 146px);
+    width: 100%;
+}
+
+.garden_title_h2 {
+    margin: 0;
 }
 
 .action_button {
@@ -17,12 +26,13 @@ img {
 
 
 .main_image {
-    margin-top: 10px; 
+    overflow: hidden;
     text-align: center;
     position: relative;
 }
 
 .garden_image {
+    height: fit-content;
     position: relative;
 }
 
