@@ -14,7 +14,8 @@ import { Subscription } from 'rxjs';
 })
 export class GardenDetailsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('logo') logo: ElementRef;
+  @ViewChild('wrapper') wrapper: ElementRef;
+  @ViewChild('image') image: ElementRef;
   private id: string;
   private text: string;
   private imageSrc: string;
@@ -57,14 +58,23 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
   }
 
   test(e) {
-    console.log(7477, (this.logo.nativeElement as HTMLImageElement).naturalWidth);
+    console.log(7477, (this.image.nativeElement as HTMLImageElement).naturalWidth);
     console.log(888, e.nativeElement);
   }
   test2(e) {
-    console.log(e.deltaX, e.deltaY, e.deltaZ);
-    if (e.deltaY > 0)
-    (this.logo.nativeElement as HTMLImageElement).width = (this.logo.nativeElement as HTMLImageElement).width +50;
-    else (this.logo.nativeElement as HTMLImageElement).width = (this.logo.nativeElement as HTMLImageElement).width -50;
+    let divH = this.wrapper.nativeElement.height;
+    let divW = this.wrapper.nativeElement.width;
+    console.log(divW,divH, this.image.nativeElement.naturalWidth, this.image.nativeElement.width);
+    if (e.deltaY > 0) {
+      if (this.image.nativeElement.width / this.image.nativeElement.naturalWidth < 3) {
+        (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width + 50;
+      }
+    }
+    else {
+      if ((divH > this.image.nativeElement.naturalHeight) && (divW > this.image.nativeElement.naturalWidth)) {
+        (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width - 50;
+      }
+    }
   }
 
   putItem(e) {

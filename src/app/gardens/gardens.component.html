@@ -6,7 +6,7 @@
   <h2>Ваши участки</h2>
   <section class="gardens" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
       
-      <mat-card (click)="showGardenDetails(item)" (touchstart)="showGardenDetails(item)" #matCard id="{{ item.id }}" *ngFor="let item of gardens" fxFlex.xs="100%">
+      <mat-card (click)="showGardenDetails(item)" (touchend)="showGardenDetails(item)" #matCard id="{{ item.id }}" *ngFor="let item of gardens" fxFlex.xs="100%">
         <mat-card-header>
           <mat-card-title fxLayoutAlign="center">{{item.text}}</mat-card-title>
         </mat-card-header>
