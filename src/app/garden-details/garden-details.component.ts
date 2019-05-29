@@ -56,10 +56,16 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     }));
   }
 
-test(e) {
-  console.log(7477, (this.logo.nativeElement as HTMLImageElement).naturalWidth);
-  console.log(888, e.nativeElement);
-}
+  test(e) {
+    console.log(7477, (this.logo.nativeElement as HTMLImageElement).naturalWidth);
+    console.log(888, e.nativeElement);
+  }
+  test2(e) {
+    console.log(e.deltaX, e.deltaY, e.deltaZ);
+    if (e.deltaY > 0)
+    (this.logo.nativeElement as HTMLImageElement).width = (this.logo.nativeElement as HTMLImageElement).width +50;
+    else (this.logo.nativeElement as HTMLImageElement).width = (this.logo.nativeElement as HTMLImageElement).width -50;
+  }
 
   putItem(e) {
     if (e.target.tagName.toLowerCase() == 'img') {
