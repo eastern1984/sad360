@@ -7,7 +7,7 @@
     <mat-spinner *ngIf="imageSrc == null"> </mat-spinner>
     
     <div class="main_image" #wrapper fxLayout="row" fxLayoutAlign="center" (wheel)="test2($event)">
-      <a class="garden_image" (touchstop)="putItem($event)" (mouseup)="putItem($event)">
+      <a class="garden_image" (touchstop)="putItem($event)" (mouseup)="putItem($event)" (mousedown)="test()"(mousemove)="test()">
         <img  #image *ngIf="imageSrc !== null" src="{{ imageSrc }}" (load)="test($event)">
           <mat-icon  matTooltip="<Название>" (click)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.coord.x" [style.top.%]="item.coord.y">radio_button_checked</mat-icon>
           <div class="items_icon" *ngFor="let itemOld of itemsDb" [style.left.%]="itemOld.coord.x" [style.top.%]="itemOld.coord.y">

@@ -58,20 +58,19 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
   }
 
   test(e) {
-    console.log(7477, (this.image.nativeElement as HTMLImageElement).naturalWidth);
-    console.log(888, e.nativeElement);
+    //console.log(888);
   }
   test2(e) {
-    let divH = this.wrapper.nativeElement.height;
-    let divW = this.wrapper.nativeElement.width;
-    console.log(divW,divH, this.image.nativeElement.naturalWidth, this.image.nativeElement.width);
+    let divH = (this.wrapper.nativeElement as HTMLImageElement).clientHeight;
+    let divW = (this.wrapper.nativeElement as HTMLImageElement).clientWidth;
     if (e.deltaY > 0) {
       if (this.image.nativeElement.width / this.image.nativeElement.naturalWidth < 3) {
         (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width + 50;
       }
     }
     else {
-      if ((divH > this.image.nativeElement.naturalHeight) && (divW > this.image.nativeElement.naturalWidth)) {
+
+      if ((divH < (this.image.nativeElement as HTMLImageElement).height) || (divW < (this.image.nativeElement as HTMLImageElement).width)) {
         (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width - 50;
       }
     }
