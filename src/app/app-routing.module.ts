@@ -9,7 +9,9 @@ import { GardenDetailsComponent } from './garden-details/garden-details.componen
 const routes: Routes = [
   { path: '', component: WelcomeComponent } ,
   { path: 'gardens', component: GardensComponent, canActivate: [AuthGuard] },
-  { path: 'garden-details', component: GardenDetailsComponent, canActivate: [AuthGuard] }
+  { path: 'garden-details', component: GardenDetailsComponent, canActivate: [AuthGuard] },
+  {path: '404', component: WelcomeComponent},
+  {path: '**', redirectTo: '/404'}
  // { path: 'training', loadChildren: './training/training.module#TrainingModule', canLoad: [AuthGuard] }
 ];
 
