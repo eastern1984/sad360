@@ -28,14 +28,10 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     private currentGarden: CurrentGardenService,
     private dialog: MatDialog,
     private db: AngularFirestore,
-    private auth: AuthService,
-    private router: Router
+    private auth: AuthService
     ) {}
 
   ngOnInit() {
-    if (!this.currentGarden.id) {
-      this.router.navigate(['/gardens']);
-    }
     window.addEventListener('scroll', this.test, true);
     this.text = this.currentGarden.text;
     this.id = this.currentGarden.id;
