@@ -4,6 +4,10 @@ import * as _ from 'lodash';
 import { MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { Upload } from '../models/upload.model';
+import { AuthService } from '../auth/auth.service';
+import { UploadService } from '../shared/upload.service';
+import * as firebase from 'firebase';
 
 export interface DialogData {
   id: string;
@@ -11,6 +15,7 @@ export interface DialogData {
   description: string;
   parent: string;
   coord: any[];
+  image: string;
 }
 
 @Component({
@@ -19,14 +24,19 @@ export interface DialogData {
                 
                   <h1 mat-dialog-title>{{ (data.id) ? 'Редактирование' : 'Добавление'}} описания к точке</h1>
                     <mat-dialog-content fxLayoutAlign="center right" fxLayout="column" fxLayoutGap="10px" style="margin: 0; width: 400px; padding: 10px; margin: 0px;">
-                        <mat-form-field *ngIf="!showSpinner" style="width: 60%;">
+                        <mat-form-field style="width: 60%;">
                           <input type="text" matInput [(ngModel)]="data.name" placeholder="Введите название">
                           <mat-error>Введите название.</mat-error>
                         </mat-form-field>
-                        <mat-form-field *ngIf="!showSpinner" style="width: 90%;">
+                        <mat-form-field style="width: 90%;">
                           <textarea type="text" matInput [(ngModel)]="data.description" rows="5" placeholder="Описание"> </textarea>
                         </mat-form-field>   
-                        <mat-spinner *ngIf="showSpinner"> </mat-spinner>                
+
+                        <button type="button" mat-raised-button (click)="imgFileInput.click()" [disabled]="showBar">{{ (imageSrc) ? 'Редактирование' : 'Добавление'}} фото</button>
+                        <input hidden type="file" #imgFileInput (change)="previewImage($event)">
+                        <img [src]="imageSrc" style="max-width: 200px" *ngIf="imageSrc">
+                        <h4 *ngIf="showBar">Загрузка изображения {{ (upload !== undefined) ? upload.progress : 0}}%</h4>
+                        <mat-progress-bar class="example-margin" *ngIf="showBar" [color]="color" [mode]="mode" [value]="(upload !== undefined) ? upload.progress : 0" style="width: 80%;"> </mat-progress-bar>
                     </mat-dialog-content>
                     
                     <mat-dialog-actions fxLayout="row"  fxLayoutAlign="center center" style="padding-bottom: 27px;">
@@ -37,28 +47,64 @@ export interface DialogData {
 })
 export class CreateDescriptionComponent implements OnDestroy, OnInit{
 
+  downloadSubscription: Subscription;
     private name: string = this.data.name;
     private description: string = this.data.description;
     private showSpinner: boolean = false;
-  
+    private showImg: boolean = false;
+    private showBar: boolean = false;
+
+    private imageSrc;
+    fileImage: File;
+    upload: Upload;
+
   constructor(
     @Inject(MAT_DIALOG_DATA)  public data: DialogData, 
     private dialogRef: MatDialogRef<CreateDescriptionComponent>,
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private auth: AuthService,
+    private uploadServise: UploadService,
     ) {
   }
 
-  ngOnInit() {
-    console.log(222222, this.data);
-  }
 
   previewImage(event): void { 
+    const files = event.target.files;
+      if (files && files[0]) {
+          this.showImg = true;
+
+          this.fileImage = files[0];  
+
+          const reader = new FileReader();
+          reader.onload = e => this.imageSrc = reader.result;
+  
+          reader.readAsDataURL(this.fileImage);
+      }
+  }
+
+  ngOnInit() {
+    this.downloadSubscription = this.uploadServise.downloadEnd.subscribe(
+      (fileName) => {
+        this.dialogRef.close({name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent, image: fileName});
+      }
+    );
+
+    console.log(1234 , this.data, this.data.image);
+    if (this.data.image) {
+      let ref = firebase.storage().ref();
+      ref.child('uploads/items/' + this.data.image).getDownloadURL().then((res) => {
+        this.imageSrc = res;
+      });
+    }
   }
 
   createItem() {
-      this.showSpinner = true;
-      console.log(222333, this.data.id);
-      this.dialogRef.close({name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent});
+    if (this.fileImage) {
+      this.showBar = true;
+      this.upload = new Upload(this.fileImage);
+      this.uploadServise.uploadFile(this.upload, '/items');
+    }
+      
   }
 
   ngOnDestroy () {

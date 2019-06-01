@@ -48,7 +48,8 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
             id: doc.payload.doc.id,
             name: doc.payload.doc.data().name,
             description: doc.payload.doc.data().description,
-            coord: doc.payload.doc.data().coord
+            coord: doc.payload.doc.data().coord,
+            image: doc.payload.doc.data().image
           };
         });
       })
@@ -96,7 +97,8 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
         description: item.description,
         name: item.name,
         coord: item.coord,
-        parent: this.id
+        parent: this.id,
+        image: item.image
       }
     });
 
@@ -104,7 +106,7 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
       if (result) 
       {
         if (item.id) {
-          this.db.collection('item').doc(item.id).update({name: result.name, description: result.description}).then((res) => {}).catch(error => console.log(error));
+          this.db.collection('item').doc(item.id).update({name: result.name, description: result.description, image: result.image}).then((res) => {}).catch(error => console.log(error));
         } else {
           this.db.collection('item').add(result).then((res) => {
             if (this.currentGarden.items) { 

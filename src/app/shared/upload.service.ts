@@ -12,13 +12,13 @@ export class UploadService {
   private basePath = '/uploads';
   downloadEnd = new Subject<string>();
 
-  constructor(/*private ngFire: AngularFireModule,*/ private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) { }
 
-  uploadFile(upload: Upload, email) {
+  uploadFile(upload: Upload, subDir: string) {
     let storageRef = firebase.storage().ref();
     let date = new Date(); 
     let unicName = date.getTime() + upload.file.name;
-    let uploadTask = storageRef.child(`${this.basePath}/${unicName}`).put(upload.file);
+    let uploadTask = storageRef.child(this.basePath + subDir + '/' + unicName).put(upload.file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) =>  {
@@ -31,17 +31,8 @@ export class UploadService {
       },
       () => {
         upload.name = upload.file.name;
-        this.saveFileData(upload, email, unicName);
-        this.downloadEnd.next('');
+        this.downloadEnd.next(unicName);
       }
     );
   }
-
-  private saveFileData(upload: Upload, email: string, unicName: string) {
-    this.db.collection('gardens/'+ email+'/data').add({name: unicName, text: upload.text, items: []})
-                .then(() => {})
-                .catch((error) => {
-                });
-  }
-
 }

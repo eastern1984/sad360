@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 
 @Component({
@@ -37,11 +38,17 @@ export class CreateGardenComponent implements OnDestroy{
     @Inject(MAT_DIALOG_DATA) public passedData: any, 
     private uploadServise: UploadService, 
     private dialogRef: MatDialogRef<CreateGardenComponent>,
-    private auth: AuthService
+    private auth: AuthService,
+    private db: AngularFirestore
     ) {
     this.downloadSubscription = this.uploadServise.downloadEnd.subscribe(
-      (url) => {
-        this.dialogRef.close(true);
+      (fileName) => {
+        this.db.collection('gardens/'+  this.auth.getEmail()+'/data').add({name: fileName, text: this.text, items: []})
+          .then(() => {
+            this.dialogRef.close(true);
+          })
+          .catch((error) => {
+        });
       }
     );
   }
@@ -49,11 +56,11 @@ export class CreateGardenComponent implements OnDestroy{
   private showBar: boolean = false;
   private showImg: boolean = false;
   downloadSubscription: Subscription;
-  imageSrc: string;
+  private imageSrc;
   fileImage: File;
   upload: Upload;
   progressValue: number;
-  text: string = '111';
+  text: string;
 
   previewImage(event): void { 
     const files = event.target.files;
@@ -72,8 +79,8 @@ export class CreateGardenComponent implements OnDestroy{
   createGarden() {
     if (this.fileImage) {
       this.showBar = true;
-      this.upload = new Upload(this.fileImage, this.text);
-      this.uploadServise.uploadFile(this.upload, this.auth.getEmail());
+      this.upload = new Upload(this.fileImage);
+      this.uploadServise.uploadFile(this.upload, '');
     }
   }
 
