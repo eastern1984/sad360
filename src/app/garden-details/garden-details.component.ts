@@ -16,6 +16,9 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('wrapper') wrapper: ElementRef;
   @ViewChild('image') image: ElementRef;
+  private sliderValue: number = 0;
+  private screenSizeIndex: number = 10;
+  private wrapperWidth: number = 100;
   private id: string;
   private text: string;
   private imageSrc: string;
@@ -32,7 +35,6 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit() {
-    window.addEventListener('scroll', this.test, true);
     this.text = this.currentGarden.text;
     this.id = this.currentGarden.id;
     let ref = firebase.storage().ref();
@@ -58,10 +60,24 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
     }));
   }
 
+test3() {
+  let naturalWidth = (this.image.nativeElement as HTMLImageElement).naturalWidth;
+    let clientWidth = (this.image.nativeElement as HTMLImageElement).clientWidth;
+
+    this.screenSizeIndex = 1 / (clientWidth / naturalWidth);
+    console.log(this.screenSizeIndex);
+}
+
   test(e) {
     //console.log(888);
   }
+
   test2(e) {
+    console.log(e.value);
+    this.wrapperWidth = 100 * e.value;
+    console.log(this.screenSizeIndex, e.value);  
+/*
+    console.log(e.value, (this.image.nativeElement as HTMLImageElement).naturalHeight,  (this.image.nativeElement as HTMLImageElement).naturalWidth);
     let divH = (this.wrapper.nativeElement as HTMLImageElement).clientHeight;
     let divW = (this.wrapper.nativeElement as HTMLImageElement).clientWidth;
     if (e.deltaY > 0) {
@@ -74,7 +90,7 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
       if ((divH < (this.image.nativeElement as HTMLImageElement).height) || (divW < (this.image.nativeElement as HTMLImageElement).width)) {
         (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width - 50;
       }
-    }
+    }*/
   }
 
   putItem(e) {

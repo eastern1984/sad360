@@ -5,8 +5,15 @@ img {
     margin: 0;
 }
 
+mat-slider {
+    z-index: 100; 
+    position: absolute;
+    left: 0;
+    min-height: 350px;
+}
+
 .main_image {
-    height: calc(100vh - 146px);
+    height: calc(100vh - 183px);
     width: 100%;
 }
 
@@ -23,17 +30,25 @@ img {
     text-align: center;
 }
 
-
+.image-src {
+    width: 100%;
+}
 
 .main_image {
-    overflow: hidden;
+    overflow: auto;
     text-align: center;
     position: relative;
+}
+
+.wrapper_image {
+    position: relative;
+    margin: auto;
 }
 
 .garden_image {
     height: fit-content;
     position: relative;
+    display: block;
 }
 
 .items_icon {
