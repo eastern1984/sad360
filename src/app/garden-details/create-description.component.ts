@@ -19,6 +19,7 @@ export interface DialogData {
 }
 
 @Component({
+  styles: ['.detail_img {margin: auto;}'],
   selector: 'app-create-description',
   template:  `
                 
@@ -34,7 +35,7 @@ export interface DialogData {
 
                         <button type="button" mat-raised-button (click)="imgFileInput.click()" [disabled]="showBar">{{ (imageSrc) ? 'Редактирование' : 'Добавление'}} фото</button>
                         <input hidden type="file" #imgFileInput (change)="previewImage($event)">
-                        <img [src]="imageSrc" style="max-width: 200px" *ngIf="imageSrc">
+                        <img class="detail_img" style="max-width: 200px;" [src]="imageSrc" *ngIf="imageSrc">
                         <h4 *ngIf="showBar">Загрузка изображения {{ (upload !== undefined) ? upload.progress : 0}}%</h4>
                         <mat-progress-bar class="example-margin" *ngIf="showBar" [color]="color" [mode]="mode" [value]="(upload !== undefined) ? upload.progress : 0" style="width: 80%;"> </mat-progress-bar>
                     </mat-dialog-content>
