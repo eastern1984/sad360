@@ -38,11 +38,12 @@ export interface DialogData {
                         <img class="detail_img" style="max-width: 200px;" [src]="imageSrc" *ngIf="imageSrc">
                         <h4 *ngIf="showBar">Загрузка изображения {{ (upload !== undefined) ? upload.progress : 0}}%</h4>
                         <mat-progress-bar class="example-margin" *ngIf="showBar" [color]="color" [mode]="mode" [value]="(upload !== undefined) ? upload.progress : 0" style="width: 80%;"> </mat-progress-bar>
+                        <button  mat-raised-button [mat-dialog-close]="'delete'" color="warn" (tap)="deleteItem()" (click)="deleteItem()">Удалить точку</button>
                     </mat-dialog-content>
                     
                     <mat-dialog-actions fxLayout="row"  fxLayoutAlign="center center" style="padding-bottom: 27px;">
-                      <button mat-raised-button color="primary" (click)="createItem()" [disabled]="showBar">Сохранить</button>
-                      <button mat-raised-button [mat-dialog-close]="false" color="warn" [disabled]="showBar">Отмена</button>
+                      <button mat-raised-button color="primary" (tap)="createItem()" (click)="createItem()" [disabled]="showBar">Сохранить</button>
+                      <button mat-raised-button [mat-dialog-close]="false" [disabled]="showBar">Отмена</button>
                     </mat-dialog-actions>
                   `
 })
@@ -86,7 +87,7 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
   ngOnInit() {
     this.downloadSubscription = this.uploadServise.downloadEnd.subscribe(
       (fileName) => {
-        this.dialogRef.close({name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent, image: fileName});
+        this.dialogRef.close({type: 'save', name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent, image: fileName});
       }
     );
 
@@ -104,6 +105,8 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
       this.showBar = true;
       this.upload = new Upload(this.fileImage);
       this.uploadServise.uploadFile(this.upload, '/items');
+    } else {
+      this.dialogRef.close({type: 'save', name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent, image: null});
     }
       
   }
@@ -113,6 +116,11 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
 
   onSubmit() {
 
+  }
+
+  deleteItem() {
+    this.db.collection('item').doc(this.data.id).delete();
+    this.dialogRef.close({type: 'delete', id: this.data.id});
   }
 }
 

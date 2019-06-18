@@ -22,7 +22,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
                     </mat-form-field>
 
                     <button type="button" mat-raised-button (click)="imgFileInput.click()" [disabled]="showBar">Выбрать схему/фото сада</button>
-                    <input hidden type="file" #imgFileInput (change)="previewImage($event)">
+                    <input hidden type="file" #imgFileInput (change)="previewImage($event)" accept="image/*">
                     <img [src]="imageSrc" style="max-width: 200px" *ngIf="showImg">
                     <h4 *ngIf="showBar">Загрузка изображения {{ (upload !== undefined) ? upload.progress : 0}}%</h4>
                     <mat-progress-bar class="example-margin" *ngIf="showBar" [color]="color" [mode]="mode" [value]="(upload !== undefined) ? upload.progress : 0" style="width: 80%;"> </mat-progress-bar>

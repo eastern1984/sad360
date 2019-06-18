@@ -16,7 +16,7 @@ export class GardenDetailsComponent implements OnInit, OnDestroy {
 
   @ViewChild('wrapper') wrapper: ElementRef;
   @ViewChild('image') image: ElementRef;
-  private sliderValue: number = 0;
+  private sliderValue: number = 1;
   private screenSizeIndex: number = 10;
   private wrapperWidth: number = 100;
   private id: string;
@@ -121,17 +121,23 @@ test3() {
     dialogRef.afterClosed().subscribe(result => {
       if (result) 
       {
-        if (item.id) {
-          this.db.collection('item').doc(item.id).update({name: result.name, description: result.description, image: result.image}).then((res) => {}).catch(error => console.log(error));
+        console.log(123, result);
+        if (result.type == 'delete') {
+          this.db.collection('gardens/' + this.auth.getEmail() +'/data/').doc(this.id).update({items: this.currentGarden.items.filter((item) => item != result.id)});
         } else {
-          this.db.collection('item').add(result).then((res) => {
-            if (this.currentGarden.items) { 
-              this.currentGarden.items.push(res.id); 
-            } else { 
-              this.currentGarden.items = [res.id]; 
-            }
-            this.db.collection('gardens/' + this.auth.getEmail() +'/data/').doc(this.id).update({items: this.currentGarden.items});
-          });
+          if (item.id) {
+            console.log(444444, item.id, result);
+            this.db.collection('item').doc(item.id).update({name: result.name, description: result.description, image: result.image}).then((res) => {}).catch(error => console.log(333, error));
+          } else {
+            this.db.collection('item').add(result).then((res) => {
+              if (this.currentGarden.items) { 
+                this.currentGarden.items.push(res.id); 
+              } else { 
+                this.currentGarden.items = [res.id]; 
+              }
+              this.db.collection('gardens/' + this.auth.getEmail() +'/data/').doc(this.id).update({items: this.currentGarden.items});
+            });
+          }
         }
       }
     });
