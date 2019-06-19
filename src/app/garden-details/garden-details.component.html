@@ -9,7 +9,7 @@
 
   <div class="main_image" fxLayout="row" fxLayoutAlign="center">
       
-    <a class="garden_image" (tap)="putItem($event)" (click)="putItem($event)">
+    <a class="garden_image" (click)="putItem($event)">
        <div #wrapper class="wrapper_image" [style.width.%]="wrapperWidth">
         <img #image class="image-src" *ngIf="imageSrc !== null" src="{{ imageSrc }}" (load)="test3()">
         <mat-icon  matTooltip="<Название>" (tap)="openItem(item)" *ngFor="let item of items" class="items_icon" color="warn" [style.left.%]="item.coord.x" [style.top.%]="item.coord.y">radio_button_checked</mat-icon>
