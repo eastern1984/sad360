@@ -76,21 +76,6 @@ test3() {
     console.log(e.value);
     this.wrapperWidth = 100 * e.value;
     console.log(this.screenSizeIndex, e.value);  
-/*
-    console.log(e.value, (this.image.nativeElement as HTMLImageElement).naturalHeight,  (this.image.nativeElement as HTMLImageElement).naturalWidth);
-    let divH = (this.wrapper.nativeElement as HTMLImageElement).clientHeight;
-    let divW = (this.wrapper.nativeElement as HTMLImageElement).clientWidth;
-    if (e.deltaY > 0) {
-      if (this.image.nativeElement.width / this.image.nativeElement.naturalWidth < 3) {
-        (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width + 50;
-      }
-    }
-    else {
-
-      if ((divH < (this.image.nativeElement as HTMLImageElement).height) || (divW < (this.image.nativeElement as HTMLImageElement).width)) {
-        (this.image.nativeElement as HTMLImageElement).width = (this.image.nativeElement as HTMLImageElement).width - 50;
-      }
-    }*/
   }
 
   putItem(e) {
@@ -121,12 +106,14 @@ test3() {
     dialogRef.afterClosed().subscribe(result => {
       if (result) 
       {
-        console.log(123, result);
         if (result.type == 'delete') {
-          this.db.collection('gardens/' + this.auth.getEmail() +'/data/').doc(this.id).update({items: this.currentGarden.items.filter((item) => item != result.id)});
+          if (result.id) {
+            this.db.collection('gardens/' + this.auth.getEmail() +'/data/').doc(this.id).update({items: this.currentGarden.items.filter((item) => item != result.id)});
+          } else {
+            this.items = this.items.filter(item => (item.coord.x != result.coord.x) || (item.coord.y != result.coord.y));
+          }
         } else {
           if (item.id) {
-            console.log(444444, item.id, result);
             this.db.collection('item').doc(item.id).update({name: result.name, description: result.description, image: result.image}).then((res) => {}).catch(error => console.log(333, error));
           } else {
             this.db.collection('item').add(result).then((res) => {

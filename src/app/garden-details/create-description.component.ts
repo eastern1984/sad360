@@ -87,7 +87,7 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
   ngOnInit() {
     this.downloadSubscription = this.uploadServise.downloadEnd.subscribe(
       (fileName) => {
-        this.dialogRef.close({type: 'save', name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent, image: fileName});
+        this.dialogRef.close({type: 'save', name: this.data.name ? this.data.name : "---", description: this.data.description ? this.data.description : '', coord: this.data.coord, parent: this.data.parent, image: fileName});
       }
     );
 
@@ -106,7 +106,7 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
       this.upload = new Upload(this.fileImage);
       this.uploadServise.uploadFile(this.upload, '/items');
     } else {
-      this.dialogRef.close({type: 'save', name: this.data.name, description: this.data.description, coord: this.data.coord, parent: this.data.parent, image: null});
+      this.dialogRef.close({type: 'save', name: this.data.name ? this.data.name : "---", description: this.data.description ? this.data.description : '', coord: this.data.coord, parent: this.data.parent, image: null});
     }
       
   }
@@ -119,8 +119,10 @@ export class CreateDescriptionComponent implements OnDestroy, OnInit{
   }
 
   deleteItem() {
-    this.db.collection('item').doc(this.data.id).delete();
-    this.dialogRef.close({type: 'delete', id: this.data.id});
+    if (this.data.id) {
+      this.db.collection('item').doc(this.data.id).delete();
+    }
+    this.dialogRef.close({type: 'delete', id: this.data.id, coord: this.data.coord});
   }
 }
 
