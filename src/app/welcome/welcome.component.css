@@ -1,3 +1,10 @@
 .welcome {
   text-align: center;
 }
+
+.main_image {
+  width: 100%;
+  height: calc(100vh - 64px);
+  background-image: url(./../../assets/img/Untitled2.jpg);
+  background-size: cover;
+}
